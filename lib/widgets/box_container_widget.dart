@@ -14,7 +14,10 @@ class BoxContainerWidget extends StatelessWidget {
     return Container(
       width: Engine().getBoxWith(size),
       height: Engine().getBoxHeight(size),
-      color: Colors.grey[400],
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(7),
+        color: Colors.grey,
+      ),
       child: Center(child: Text('$id')),
     );
   }
