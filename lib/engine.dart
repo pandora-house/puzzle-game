@@ -36,6 +36,59 @@ class Engine extends ChangeNotifier {
   }
 
   PositionGap? getGapPosition(var id, var matrix) {
+    final coordinates = _getIdCoordinates(id, matrix);
+
+    int? topIndex = coordinates.y - 1;
+    if (coordinates.y == 0) topIndex = null;
+    int? bottomIndex = coordinates.y + 1;
+    if (coordinates.y == matrix.length - 1) bottomIndex = null;
+    int? rightIndex = coordinates.x + 1;
+    if (coordinates.x == matrix[0].length - 1) rightIndex = null;
+    int? leftIndex = coordinates.x - 1;
+    if (coordinates.x == 0) leftIndex = null;
+
+    if (topIndex != null) {
+      if (matrix[topIndex][coordinates.x] == 0) {
+        return PositionGap.top;
+      }
+    }
+
+    if (bottomIndex != null) {
+      if (matrix[bottomIndex][coordinates.x] == 0) {
+        return PositionGap.bottom;
+      }
+    }
+
+    if (rightIndex != null) {
+      if (matrix[coordinates.y][rightIndex] == 0) {
+        return PositionGap.right;
+      }
+    }
+
+    if (leftIndex != null) {
+      if (matrix[coordinates.y][leftIndex] == 0) {
+        return PositionGap.left;
+      }
+    }
+  }
+
+  void updateMatrix(var id, var move) {
+    final coordinates = _getIdCoordinates(id, _idMatrix);
+
+    if (move == MoveBox.bottom && coordinates.y != _idMatrix.length - 1) {
+      final elementId = _idMatrix[coordinates.y][coordinates.x];
+      _idMatrix[coordinates.y][coordinates.x] = 0;
+      _idMatrix[coordinates.y + 1][coordinates.x] = elementId;
+      notifyListeners();
+    } else if (move == MoveBox.top && coordinates.y != 0) {
+      final elementId = _idMatrix[coordinates.y][coordinates.x];
+      _idMatrix[coordinates.y][coordinates.x] = 0;
+      _idMatrix[coordinates.y - 1][coordinates.x] = elementId;
+      notifyListeners();
+    }
+  }
+
+  IdIndex _getIdCoordinates(var id, var matrix) {
     int xIdIndex = 0;
     int yIdIndex = 0;
     for (final row in matrix) {
@@ -46,62 +99,7 @@ class Engine extends ChangeNotifier {
         }
       }
     }
-    int? topIndex = yIdIndex - 1;
-    if (yIdIndex == 0) topIndex = null;
-    int? bottomIndex = yIdIndex + 1;
-    if (yIdIndex == matrix.length - 1) bottomIndex = null;
-    int? rightIndex = xIdIndex + 1;
-    if (xIdIndex == matrix[0].length - 1) rightIndex = null;
-    int? leftIndex = xIdIndex - 1;
-    if (xIdIndex == 0) leftIndex = null;
-
-    if (topIndex != null) {
-      if (matrix[topIndex][xIdIndex] == 0) {
-        return PositionGap.top;
-      }
-    }
-
-    if (bottomIndex != null) {
-      if (matrix[bottomIndex][xIdIndex] == 0) {
-        return PositionGap.bottom;
-      }
-    }
-
-    if (rightIndex != null) {
-      if (matrix[yIdIndex][rightIndex] == 0) {
-        return PositionGap.right;
-      }
-    }
-
-    if (leftIndex != null) {
-      if (matrix[yIdIndex][leftIndex] == 0) {
-        return PositionGap.left;
-      }
-    }
-  }
-
-  void updateMatrix(var id, var move) {
-    int xIdIndex = 0;
-    int yIdIndex = 0;
-    for (final row in _idMatrix) {
-      for (final elem in row) {
-        if (elem == id) {
-          xIdIndex = row.indexOf(elem);
-          yIdIndex = _idMatrix.indexOf(row);
-        }
-      }
-    }
-    if (move == MoveBox.bottom && yIdIndex != _idMatrix.length - 1) {
-      final elementId = _idMatrix[yIdIndex][xIdIndex];
-      _idMatrix[yIdIndex][xIdIndex] = 0;
-      _idMatrix[yIdIndex + 1][xIdIndex] = elementId;
-      notifyListeners();
-    } else if (move == MoveBox.top && yIdIndex != 0) {
-      final elementId = _idMatrix[yIdIndex][xIdIndex];
-      _idMatrix[yIdIndex][xIdIndex] = 0;
-      _idMatrix[yIdIndex - 1][xIdIndex] = elementId;
-      notifyListeners();
-    }
+    return IdIndex(x: xIdIndex, y: yIdIndex);
   }
 
   double getBoxWith(var size) => size.width / _idMatrix[0].length;
@@ -116,9 +114,9 @@ class PositionBox {
   PositionBox({required this.x, required this.y});
 }
 
-// class IdIndex {
-//   final int x;
-//   final int y;
-//
-//   IdIndex({required this.x, required this.y});
-// }
+class IdIndex {
+  final int x;
+  final int y;
+
+  IdIndex({required this.x, required this.y});
+}
