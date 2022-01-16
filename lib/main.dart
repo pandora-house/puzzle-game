@@ -112,8 +112,8 @@ class AnimatedBox extends StatefulWidget {
 class _AnimatedBoxState extends State<AnimatedBox> {
   double positionX = 0;
   double positionY = 0;
-  double addY = 0;
-  double addX = 0;
+  double boxHeight = 0;
+  double boxWith = 0;
   int incrementY = 0;
   int incrementX = 0;
   PositionGap? _gap;
@@ -124,8 +124,8 @@ class _AnimatedBoxState extends State<AnimatedBox> {
     final position = Engine().initPosition(widget.id, widget.size);
     positionX = position.x;
     positionY = position.y;
-    addY = Engine().getBoxHeight(widget.size);
-    addX = Engine().getBoxWith(widget.size);
+    boxHeight = Engine().getBoxHeight(widget.size);
+    boxWith = Engine().getBoxWith(widget.size);
   }
 
   @override
@@ -135,8 +135,8 @@ class _AnimatedBoxState extends State<AnimatedBox> {
     _gap = Engine().getGapPosition(widget.id, matrix);
     return AnimatedPositioned(
       duration: const Duration(seconds: 1),
-      top: positionY + addY * incrementY,
-      left: positionX + addX * incrementX,
+      top: positionY + boxHeight * incrementY,
+      left: positionX + boxWith * incrementX,
       child: GestureDetector(
         child: BoxContainer(
           id: widget.id,
