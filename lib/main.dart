@@ -130,11 +130,10 @@ class _AnimatedBoxState extends State<AnimatedBox> {
 
   @override
   Widget build(BuildContext context) {
-    final matrix =
-        context.select<Engine, List<List<int>>>((value) => value.idMatrix);
+    final matrix = context.watch<Engine>().idMatrix;
     _gap = Engine().getGapPosition(widget.id, matrix);
     return AnimatedPositioned(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 700),
       top: positionY + boxHeight * incrementY,
       left: positionX + boxWith * incrementX,
       child: GestureDetector(
@@ -146,21 +145,26 @@ class _AnimatedBoxState extends State<AnimatedBox> {
             ? null
             : () {
                 if (_gap == PositionGap.top) {
+                  context.read<Engine>().updateMatrix(widget.id, MoveBox.top);
                   setState(() {
                     incrementY--;
                   });
                 } else if (_gap == PositionGap.bottom) {
-                  // context
-                  //     .read<Engine>()
-                  //     .updateMatrix(widget.id, MoveBox.bottom);
+                  context
+                      .read<Engine>()
+                      .updateMatrix(widget.id, MoveBox.bottom);
                   setState(() {
                     incrementY++;
                   });
                 } else if (_gap == PositionGap.right) {
+                  context
+                      .read<Engine>()
+                      .updateMatrix(widget.id, MoveBox.right);
                   setState(() {
                     incrementX++;
                   });
                 } else if (_gap == PositionGap.left) {
+                  context.read<Engine>().updateMatrix(widget.id, MoveBox.left);
                   setState(() {
                     incrementX--;
                   });

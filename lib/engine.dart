@@ -75,16 +75,28 @@ class Engine extends ChangeNotifier {
   void updateMatrix(var id, var move) {
     final coordinates = _getIdCoordinates(id, _idMatrix);
 
-    if (move == MoveBox.bottom && coordinates.y != _idMatrix.length - 1) {
-      final elementId = _idMatrix[coordinates.y][coordinates.x];
-      _idMatrix[coordinates.y][coordinates.x] = 0;
+    final elementId = _idMatrix[coordinates.y][coordinates.x];
+    _idMatrix[coordinates.y][coordinates.x] = 0;
+
+    if (move == MoveBox.bottom) {
       _idMatrix[coordinates.y + 1][coordinates.x] = elementId;
       notifyListeners();
-    } else if (move == MoveBox.top && coordinates.y != 0) {
-      final elementId = _idMatrix[coordinates.y][coordinates.x];
-      _idMatrix[coordinates.y][coordinates.x] = 0;
+      return;
+    }
+    if (move == MoveBox.top) {
       _idMatrix[coordinates.y - 1][coordinates.x] = elementId;
       notifyListeners();
+      return;
+    }
+    if (move == MoveBox.left) {
+      _idMatrix[coordinates.y][coordinates.x - 1] = elementId;
+      notifyListeners();
+      return;
+    }
+    if (move == MoveBox.right) {
+      _idMatrix[coordinates.y][coordinates.x + 1] = elementId;
+      notifyListeners();
+      return;
     }
   }
 
