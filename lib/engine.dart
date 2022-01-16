@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
-enum PositionZero { top, bottom, left, right }
+enum PositionGap { top, bottom, left, right }
 enum MoveBox { top, bottom, left, right }
 
 class Engine extends ChangeNotifier {
@@ -35,7 +35,7 @@ class Engine extends ChangeNotifier {
         x: getBoxWith(size) * counterX, y: getBoxHeight(size) * counterY);
   }
 
-  AxisAlign? getAxis(var id, var matrix) {
+  PositionGap? getGapPosition(var id, var matrix) {
     int xIdIndex = 0;
     int yIdIndex = 0;
     for (final row in matrix) {
@@ -57,25 +57,25 @@ class Engine extends ChangeNotifier {
 
     if (topIndex != null) {
       if (matrix[topIndex][xIdIndex] == 0) {
-        return AxisAlign(align: Axis.vertical, zero: PositionZero.top);
+        return PositionGap.top;
       }
     }
 
     if (bottomIndex != null) {
       if (matrix[bottomIndex][xIdIndex] == 0) {
-        return AxisAlign(align: Axis.vertical, zero: PositionZero.bottom);
+        return PositionGap.bottom;
       }
     }
 
     if (rightIndex != null) {
       if (matrix[yIdIndex][rightIndex] == 0) {
-        return AxisAlign(align: Axis.horizontal, zero: PositionZero.right);
+        return PositionGap.right;
       }
     }
 
     if (leftIndex != null) {
       if (matrix[yIdIndex][leftIndex] == 0) {
-        return AxisAlign(align: Axis.horizontal, zero: PositionZero.left);
+        return PositionGap.left;
       }
     }
   }
@@ -107,13 +107,6 @@ class Engine extends ChangeNotifier {
   double getBoxWith(var size) => size.width / _idMatrix[0].length;
 
   double getBoxHeight(var size) => size.height / _idMatrix.length;
-}
-
-class AxisAlign {
-  final Axis? align;
-  final PositionZero? zero;
-
-  AxisAlign({this.align, this.zero});
 }
 
 class PositionBox {

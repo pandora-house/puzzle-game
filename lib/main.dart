@@ -116,7 +116,7 @@ class _AnimatedBoxState extends State<AnimatedBox> {
   double addX = 0;
   int incrementY = 0;
   int incrementX = 0;
-  AxisAlign? axis;
+  PositionGap? _gap;
 
   @override
   void initState() {
@@ -130,55 +130,44 @@ class _AnimatedBoxState extends State<AnimatedBox> {
 
   @override
   Widget build(BuildContext context) {
-    final matrix = context.select<Engine, List<List<int>>>((value) => value.idMatrix);
-    axis = Engine().getAxis(widget.id, matrix);
-    return axis == null
-        ? AnimatedPositioned(
-            duration: const Duration(seconds: 0),
-            top: positionY,
-            left: positionX,
-            child: BoxContainer(
-              id: widget.id,
-              size: widget.size,
-            ),
-          )
-        : AnimatedPositioned(
-            duration: const Duration(seconds: 1),
-            top: positionY + addY * incrementY,
-            left: positionX + addX * incrementX,
-            child: Draggable(
-              axis: axis!.align,
-              childWhenDragging: const SizedBox.shrink(),
-              child: BoxContainer(
-                id: widget.id,
-                size: widget.size,
-              ),
-              feedback: BoxContainer(
-                id: widget.id,
-                size: widget.size,
-              ),
-              onDragStarted: () {
-                if (axis!.zero == PositionZero.top) {
+    final matrix =
+        context.select<Engine, List<List<int>>>((value) => value.idMatrix);
+    _gap = Engine().getGapPosition(widget.id, matrix);
+    return AnimatedPositioned(
+      duration: const Duration(seconds: 1),
+      top: positionY + addY * incrementY,
+      left: positionX + addX * incrementX,
+      child: GestureDetector(
+        child: BoxContainer(
+          id: widget.id,
+          size: widget.size,
+        ),
+        onTap: _gap == null
+            ? null
+            : () {
+                if (_gap == PositionGap.top) {
                   setState(() {
                     incrementY--;
                   });
-                } else if (axis!.zero == PositionZero.bottom) {
-                  context.read<Engine>().updateMatrix(widget.id, MoveBox.bottom);
+                } else if (_gap == PositionGap.bottom) {
+                  // context
+                  //     .read<Engine>()
+                  //     .updateMatrix(widget.id, MoveBox.bottom);
                   setState(() {
                     incrementY++;
                   });
-                } else if (axis!.zero == PositionZero.right) {
+                } else if (_gap == PositionGap.right) {
                   setState(() {
                     incrementX++;
                   });
-                } else if (axis!.zero == PositionZero.left) {
+                } else if (_gap == PositionGap.left) {
                   setState(() {
                     incrementX--;
                   });
                 }
               },
-            ),
-          );
+      ),
+    );
   }
 }
 
