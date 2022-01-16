@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:collection/collection.dart';
+import 'package:puzzle_game/home_page.dart';
 
 import 'models/models.dart';
 
@@ -124,9 +125,11 @@ class Engine extends ChangeNotifier {
     return IdIndex(x: xIdIndex, y: yIdIndex);
   }
 
-  double getBoxWith(var size) => size.width / _currentIdMatrix[0].length;
+  double getBoxWith(var size) =>
+      (size.width - 2 * HomePage.paddingPage) / _currentIdMatrix[0].length;
 
-  double getBoxHeight(var size) => size.height / _currentIdMatrix.length;
+  double getBoxHeight(var size) =>
+      (size.height - 2 * HomePage.paddingPage) / _currentIdMatrix.length;
 
   bool isIdMatrixCorrect() {
     Function equal = const DeepCollectionEquality().equals;
