@@ -169,6 +169,8 @@ class _AnimatedBoxState extends State<AnimatedBox> {
                     incrementX--;
                   });
                 }
+
+                final isIdMatrixCorrect = context.read<Engine>().isIdMatrixCorrect();
               },
       ),
     );
