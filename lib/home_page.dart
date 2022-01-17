@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'widgets/ball_animated_widget.dart';
 import 'widgets/box_animated_widget.dart';
 
 class HomePage extends StatelessWidget {
@@ -75,7 +76,8 @@ class HomePage extends StatelessWidget {
                 id: 15,
                 size: size,
               ),
-            ],
+              const BallAnimatedWidget(),
+        ],
           ),
         ));
   }
