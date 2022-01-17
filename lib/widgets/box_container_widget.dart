@@ -16,53 +16,78 @@ class BoxContainerWidget extends StatelessWidget {
       child: SizedBox(
         width: Engine().getBoxWith(size) - 2 * padding,
         height: Engine().getBoxHeight(size) - 2 * padding,
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(7),
-        //   color: Colors.grey,
-        // ),
-        // child: Center(child: Text('$id')),
         child: CustomPaint(
-          painter: MyPainter(),
+          painter: _BoxPainter(id: id),
         ),
       ),
     );
   }
 }
 
-class MyPainter extends CustomPainter {
+class _BoxPainter extends CustomPainter {
+  const _BoxPainter({this.id});
+
+  final int? id;
+
   @override
   void paint(Canvas canvas, Size size) {
-    double width = size.width;
-    double height = size.height;
-    double radius = 6;
+    final width = size.width;
+    final height = size.height;
+    const double radius = 6;
+    const double lineWidth = 3;
 
-    Paint blackPaint = Paint()
+    Paint borderPaint = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
+      ..strokeWidth = lineWidth;
 
-    Paint redPaint = Paint()
-      ..color = Colors.red
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
-
-    RRect fullRect = RRect.fromRectAndRadius(
+    RRect borderRect = RRect.fromRectAndRadius(
       Rect.fromCenter(
           center: Offset(width / 2, height / 2), width: width, height: height),
-      Radius.circular(radius),
+      const Radius.circular(radius),
     );
 
-    Path topRightArc = Path()
-      ..moveTo(width - radius, 0)
-      ..arcToPoint(Offset(width, radius), radius: Radius.circular(radius));
+    Color innerMainColor = const Color(0xFFFFD096);
+    Color innerSmallColor = const Color(0xFFFFE1C5);
 
-    Path bottomLeftArc = Path()
-      ..moveTo(radius, height)
-      ..arcToPoint(Offset(0, height - radius), radius: Radius.circular(radius));
+    if (id == 1) {
+      innerSmallColor = const Color(0xFFAFAFAF);
+      innerMainColor = const Color(0xFF898685);
+    }
+    if (id == 15) {
+      innerSmallColor = const Color(0xFFFF985C);
+      innerMainColor = const Color(0xFFF56D23);
+    }
 
-    canvas.drawRRect(fullRect, blackPaint);
-    canvas.drawPath(topRightArc, redPaint);
-    canvas.drawPath(bottomLeftArc, redPaint);
+    Paint innerPaintSmall = Paint()
+      ..color = innerSmallColor
+      ..style = PaintingStyle.fill
+      ..strokeWidth = lineWidth;
+
+    RRect innerRectSmall = RRect.fromRectAndRadius(
+      Rect.fromCenter(
+          center: Offset(width / 2, 7),
+          width: width - lineWidth * 2 + 4,
+          height: 12),
+      const Radius.circular(6),
+    );
+
+    Paint innerPaintMain = Paint()
+      ..color = innerMainColor
+      ..style = PaintingStyle.fill
+      ..strokeWidth = lineWidth;
+
+    RRect innerRectMain = RRect.fromRectAndRadius(
+      Rect.fromCenter(
+          center: Offset(width / 2, height / 2 + 1),
+          width: width - lineWidth * 2 + 4,
+          height: height - lineWidth * 2 + 2),
+      const Radius.circular(radius),
+    );
+
+    canvas.drawRRect(borderRect, borderPaint);
+    canvas.drawRRect(innerRectSmall, innerPaintSmall);
+    canvas.drawRRect(innerRectMain, innerPaintMain);
   }
 
   @override
