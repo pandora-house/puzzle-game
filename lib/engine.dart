@@ -126,13 +126,15 @@ class Engine extends ChangeNotifier {
   }
 
   double getBoxWith(var size) =>
-      (size.width - 2 * HomePage.paddingPage) / _currentIdMatrix[0].length;
+      (size.width - 2 * PuzzlePage.padding) / _currentIdMatrix[0].length;
 
   double getBoxHeight(var size) =>
-      (size.height - 2 * HomePage.paddingPage) / _currentIdMatrix.length;
+      (size.height - 2 * PuzzlePage.padding) / _currentIdMatrix.length;
 
   bool isIdMatrixCorrect() {
     Function equal = const DeepCollectionEquality().equals;
     return equal(_currentIdMatrix, _answerIdMatrix);
   }
+
+  int quantityInternalGaps() => _currentIdMatrix.length - 1;
 }
