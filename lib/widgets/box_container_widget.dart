@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../engine.dart';
+import '../home_page.dart';
 
 class BoxContainerWidget extends StatelessWidget {
   const BoxContainerWidget({Key? key, required this.id, required this.size})
@@ -8,14 +9,15 @@ class BoxContainerWidget extends StatelessWidget {
   final int id;
   final Size size;
 
+  static const borderWidth = 3.0;
+
   @override
   Widget build(BuildContext context) {
-    const padding = 2.0;
     return Padding(
-      padding: const EdgeInsets.all(padding),
+      padding: const EdgeInsets.all(PuzzlePage.internalGap),
       child: SizedBox(
-        width: Engine().getBoxWith(size) - 2 * padding,
-        height: Engine().getBoxHeight(size) - 2 * padding,
+        width: Engine().getBoxWith(size) - 2 * PuzzlePage.internalGap,
+        height: Engine().getBoxHeight(size) - 2 * PuzzlePage.internalGap,
         child: CustomPaint(
           painter: _BoxPainter(id: id),
         ),
@@ -34,12 +36,11 @@ class _BoxPainter extends CustomPainter {
     final width = size.width;
     final height = size.height;
     const double radius = 6;
-    const double lineWidth = 3;
 
     Paint borderPaint = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.stroke
-      ..strokeWidth = lineWidth;
+      ..strokeWidth = BoxContainerWidget.borderWidth;
 
     RRect borderRect = RRect.fromRectAndRadius(
       Rect.fromCenter(
@@ -62,12 +63,12 @@ class _BoxPainter extends CustomPainter {
     Paint innerPaintSmall = Paint()
       ..color = innerSmallColor
       ..style = PaintingStyle.fill
-      ..strokeWidth = lineWidth;
+      ..strokeWidth = BoxContainerWidget.borderWidth;
 
     RRect innerRectSmall = RRect.fromRectAndRadius(
       Rect.fromCenter(
           center: Offset(width / 2, 7),
-          width: width - lineWidth * 2 + 4,
+          width: width - BoxContainerWidget.borderWidth * 2 + 4,
           height: 12),
       const Radius.circular(6),
     );
@@ -75,13 +76,13 @@ class _BoxPainter extends CustomPainter {
     Paint innerPaintMain = Paint()
       ..color = innerMainColor
       ..style = PaintingStyle.fill
-      ..strokeWidth = lineWidth;
+      ..strokeWidth = BoxContainerWidget.borderWidth;
 
     RRect innerRectMain = RRect.fromRectAndRadius(
       Rect.fromCenter(
           center: Offset(width / 2, height / 2 + 1),
-          width: width - lineWidth * 2 + 4,
-          height: height - lineWidth * 2 + 2),
+          width: width - BoxContainerWidget.borderWidth * 2 + 4,
+          height: height - BoxContainerWidget.borderWidth * 2 + 2),
       const Radius.circular(radius),
     );
 
