@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../engine.dart';
-import '../home_page.dart';
+import '../puzzle_page.dart';
 
 class BoxContainerWidget extends StatelessWidget {
   const BoxContainerWidget({Key? key, required this.id, required this.size})

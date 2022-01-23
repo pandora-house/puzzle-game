@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'engine.dart';
-import 'home_page.dart';
+import 'puzzle_page.dart';
 
 void main() {
   runApp(const MyApp());

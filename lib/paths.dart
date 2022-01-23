@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'engine.dart';
-import 'home_page.dart';
+import 'puzzle_page.dart';
 import 'widgets/ball_container_widget.dart';
 import 'widgets/box_container_widget.dart';
 

@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'home_page.dart';
+import 'puzzle_page.dart';
 import 'models/models.dart';
 
 enum PositionGap { top, bottom, left, right }
