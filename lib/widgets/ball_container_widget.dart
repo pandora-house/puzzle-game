@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../engine.dart';
-
 class BallContainerWidget extends StatelessWidget {
   const BallContainerWidget({Key? key}) : super(key: key);
   static const size = 24.0;
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
+    return const CustomPaint(
       painter: _BallPainter(),
     );
   }
