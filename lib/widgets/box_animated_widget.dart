@@ -73,8 +73,7 @@ class _BoxAnimatedWidgetState extends State<BoxAnimatedWidget> {
                   });
                 }
 
-                final isIdMatrixCorrect =
-                    context.read<Engine>().isIdMatrixCorrect();
+                context.read<Engine>().checkIdMatrix();
               },
       ),
     );

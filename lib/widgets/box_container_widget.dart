@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../pipes_drawer.dart';
+import 'ball_container_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../engine.dart';
 import '../puzzle_page.dart';
@@ -20,9 +23,23 @@ class BoxContainerWidget extends StatelessWidget {
         height: Engine().getBoxHeight(size) - 2 * PuzzlePage.internalGap,
         child: CustomPaint(
           painter: _BoxPainter(id: id),
+          child: _BallView(id: id,),
         ),
       ),
     );
+  }
+}
+
+class _BallView extends StatelessWidget {
+  const _BallView({Key? key, required this.id}) : super(key: key);
+  final int id;
+
+  @override
+  Widget build(BuildContext context) {
+    final notCorrect = context.select<Engine, bool>((value) => !value.correct);
+    return id == 1 && notCorrect
+        ? const Center(child: BallContainerWidget())
+        : const SizedBox.shrink();
   }
 }
 
@@ -89,6 +106,17 @@ class _BoxPainter extends CustomPainter {
     canvas.drawRRect(borderRect, borderPaint);
     canvas.drawRRect(innerRectSmall, innerPaintSmall);
     canvas.drawRRect(innerRectMain, innerPaintMain);
+
+    Paint pipesColor = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill
+      ..strokeWidth = BoxContainerWidget.borderWidth;
+
+    if (id == 5) {
+      canvas.drawRRect(PipesDrawer.verticalPipe(size), pipesColor);
+    } else if (id == 14) {
+      canvas.drawRRect(PipesDrawer.horizontalPipe(size), pipesColor);
+    }
   }
 
   @override

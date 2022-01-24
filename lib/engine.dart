@@ -22,7 +22,11 @@ class Engine extends ChangeNotifier {
     [12, 13, 14, 15],
   ];
 
+  bool _correct = false;
+
   List<List<int>> get idMatrix => _currentIdMatrix;
+
+  bool get correct => _correct;
 
   PositionBox initPosition(var id, var size) {
     int counterY = 0;
@@ -131,9 +135,12 @@ class Engine extends ChangeNotifier {
   double getBoxHeight(var size) =>
       (size.height - 2 * PuzzlePage.padding) / _currentIdMatrix.length;
 
-  bool isIdMatrixCorrect() {
+  void checkIdMatrix() {
     Function equal = const DeepCollectionEquality().equals;
-    return equal(_currentIdMatrix, _answerIdMatrix);
+    if (equal(_currentIdMatrix, _answerIdMatrix)) {
+      _correct = true;
+      notifyListeners();
+    }
   }
 
   int quantityInternalGaps() => _currentIdMatrix.length - 1;
