@@ -23,7 +23,9 @@ class BoxContainerWidget extends StatelessWidget {
         height: Engine().getBoxHeight(size) - 2 * PuzzlePage.internalGap,
         child: CustomPaint(
           painter: _BoxPainter(id: id),
-          child: _BallView(id: id,),
+          child: _BallView(
+            id: id,
+          ),
         ),
       ),
     );
@@ -54,12 +56,12 @@ class _BoxPainter extends CustomPainter {
     final height = size.height;
     const double radius = 6;
 
-    Paint borderPaint = Paint()
+    final borderPaint = Paint()
       ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = BoxContainerWidget.borderWidth;
 
-    RRect borderRect = RRect.fromRectAndRadius(
+    final borderRect = RRect.fromRectAndRadius(
       Rect.fromCenter(
           center: Offset(width / 2, height / 2), width: width, height: height),
       const Radius.circular(radius),
@@ -77,12 +79,12 @@ class _BoxPainter extends CustomPainter {
       innerMainColor = const Color(0xFFF56D23);
     }
 
-    Paint innerPaintSmall = Paint()
+    final innerPaintSmall = Paint()
       ..color = innerSmallColor
       ..style = PaintingStyle.fill
       ..strokeWidth = BoxContainerWidget.borderWidth;
 
-    RRect innerRectSmall = RRect.fromRectAndRadius(
+    final innerRectSmall = RRect.fromRectAndRadius(
       Rect.fromCenter(
           center: Offset(width / 2, 7),
           width: width - BoxContainerWidget.borderWidth * 2 + 4,
@@ -90,12 +92,12 @@ class _BoxPainter extends CustomPainter {
       const Radius.circular(6),
     );
 
-    Paint innerPaintMain = Paint()
+    final innerPaintMain = Paint()
       ..color = innerMainColor
       ..style = PaintingStyle.fill
       ..strokeWidth = BoxContainerWidget.borderWidth;
 
-    RRect innerRectMain = RRect.fromRectAndRadius(
+    final innerRectMain = RRect.fromRectAndRadius(
       Rect.fromCenter(
           center: Offset(width / 2, height / 2 + 1),
           width: width - BoxContainerWidget.borderWidth * 2 + 4,
@@ -107,15 +109,20 @@ class _BoxPainter extends CustomPainter {
     canvas.drawRRect(innerRectSmall, innerPaintSmall);
     canvas.drawRRect(innerRectMain, innerPaintMain);
 
-    Paint pipesColor = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.fill
-      ..strokeWidth = BoxContainerWidget.borderWidth;
-
-    if (id == 5) {
-      canvas.drawRRect(PipesDrawer.verticalPipe(size), pipesColor);
+    if (id == 1) {
+      PipesDrawer.start(canvas, size);
+    } else if (id == 5) {
+      PipesDrawer.vertical(canvas, size);
+    } else if (id == 8) {
+      PipesDrawer.topRightCorner(canvas, size);
+    } else if (id == 9) {
+      PipesDrawer.leftBottomCorner(canvas, size);
+    } else if (id == 13) {
+      PipesDrawer.topRightCorner(canvas, size);
     } else if (id == 14) {
-      canvas.drawRRect(PipesDrawer.horizontalPipe(size), pipesColor);
+      PipesDrawer.horizontal(canvas, size);
+    } else if (id == 15) {
+      PipesDrawer.end(canvas, size);
     }
   }
 
