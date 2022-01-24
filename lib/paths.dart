@@ -21,13 +21,13 @@ class Paths {
         padding / 2 -
         ballSize / 2 +
         internalGap * quantityGaps +
-        boxBorderWidth / 2;
+        boxBorderWidth / 2 + internalGap / quantityGaps;
 
     final initY = boxHeight / 2 +
         padding / 2 -
         ballSize / 2 +
         internalGap * quantityGaps +
-        boxBorderWidth / 2;
+        boxBorderWidth / 2 + internalGap / quantityGaps;
 
     final path = Path()
       ..moveTo(initX, initY)
