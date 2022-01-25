@@ -18,13 +18,13 @@ class _BallAnimatedWidgetState extends State<BallAnimatedWidget>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation _animation;
-  late final Path _path;
+  late Path _path;
 
   @override
   void initState() {
+    super.initState();
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 6));
-    super.initState();
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
       ..addListener(() {
         // todo change update ui
@@ -42,6 +42,7 @@ class _BallAnimatedWidgetState extends State<BallAnimatedWidget>
 
   @override
   Widget build(BuildContext context) {
+    _path = BallPath.drawPath(widget.size);
     return Positioned(
         top: calculate(_animation.value).dy,
         left: calculate(_animation.value).dx,

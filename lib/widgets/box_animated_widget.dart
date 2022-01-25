@@ -24,17 +24,12 @@ class _BoxAnimatedWidgetState extends State<BoxAnimatedWidget> {
   PositionGap? _gap;
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     final position = Engine().initPosition(widget.id, widget.size);
     _positionX = position.x;
     _positionY = position.y;
     _boxHeight = Engine().getBoxHeight(widget.size);
     _boxWith = Engine().getBoxWith(widget.size);
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final matrix = context.watch<Engine>().idMatrix;
     _gap = Engine().getGapPosition(widget.id, matrix);
     return AnimatedPositioned(
