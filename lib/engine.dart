@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'puzzle_page.dart';
@@ -8,18 +7,11 @@ enum PositionGap { top, bottom, left, right }
 enum MoveBox { top, bottom, left, right }
 
 class Engine extends ChangeNotifier {
-  final _answerIdMatrix = [
-    [1, 2, 3, 4],
-    [5, 6, 10, 7],
-    [8, 9, 0, 11],
-    [12, 13, 14, 15],
-  ];
-
   final _currentIdMatrix = [
     [1, 2, 3, 4],
-    [5, 6, 0, 7],
-    [8, 9, 10, 11],
-    [12, 13, 14, 15],
+    [5, 6, 10, 7],
+    [8, 9, 14, 11],
+    [12, 13, 0, 15],
   ];
 
   bool _correct = false;
@@ -135,13 +127,39 @@ class Engine extends ChangeNotifier {
   double getBoxHeight(var size) =>
       (size.height - 2 * PuzzlePage.padding) / _currentIdMatrix.length;
 
-  // todo needs create own deep comparison
   void checkIdMatrix() {
-    Function equal = const DeepCollectionEquality().equals;
-    if (equal(_currentIdMatrix, _answerIdMatrix)) {
-      _correct = true;
-      notifyListeners();
+    final id1XY = <int>[0, 0];
+    final id2XY = <int>[0, 1];
+    final id8XY = <int>[0, 2];
+    final id9XY = <int>[1, 2];
+    final id13XY = <int>[1, 3];
+    final id14XY = <int>[2, 3];
+    final id15XY = <int>[2, 3];
+
+    final idList = <List<int>>[
+      id1XY,
+      id2XY,
+      id8XY,
+      id9XY,
+      id13XY,
+      id14XY,
+      id15XY
+    ];
+
+    final correctMatrix = [
+      [1, 2, 3, 4],
+      [5, 6, 0, 7],
+      [8, 9, 10, 11],
+      [12, 13, 14, 15],
+    ];
+
+    for (final id in idList) {
+      if (correctMatrix[id[1]][id[0]] != _currentIdMatrix[id[1]][id[0]]) {
+        return;
+      }
     }
+
+    _correct = true;
   }
 
   int quantityInternalGaps() => _currentIdMatrix.length - 1;
