@@ -135,6 +135,7 @@ class Engine extends ChangeNotifier {
   double getBoxHeight(var size) =>
       (size.height - 2 * PuzzlePage.padding) / _currentIdMatrix.length;
 
+  // todo needs create own deep comparison
   void checkIdMatrix() {
     Function equal = const DeepCollectionEquality().equals;
     if (equal(_currentIdMatrix, _answerIdMatrix)) {
