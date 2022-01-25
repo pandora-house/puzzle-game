@@ -67,16 +67,16 @@ class _BoxPainter extends CustomPainter {
       const Radius.circular(radius),
     );
 
-    Color innerMainColor = const Color(0xFFFFD096);
-    Color innerSmallColor = const Color(0xFFFFE1C5);
+    Color innerMainColor = const Color(0xFF7D84BD);
+    Color innerSmallColor = const Color(0xFFC7CCFF);
 
     if (id == 1) {
-      innerSmallColor = const Color(0xFFAFAFAF);
-      innerMainColor = const Color(0xFF898685);
+      innerSmallColor = const Color(0xFFE7A6FF);
+      innerMainColor = const Color(0xFFB300EA);
     }
     if (id == 15) {
-      innerSmallColor = const Color(0xFFFF985C);
-      innerMainColor = const Color(0xFFF56D23);
+      innerSmallColor = const Color(0xFFFAFFF2);
+      innerMainColor = const Color(0xFFD6E623);
     }
 
     final innerPaintSmall = Paint()

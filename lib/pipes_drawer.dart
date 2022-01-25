@@ -7,7 +7,7 @@ class PipesDrawer {
   static const thickness = 3.0;
 
   static Paint _color() => Paint()
-    ..color = Colors.black
+    ..color = const Color(0xFF0E0D1E)
     ..style = PaintingStyle.fill
     ..strokeWidth = BoxContainerWidget.borderWidth;
 

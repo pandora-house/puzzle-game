@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../paths.dart';
+import '../ball_path.dart';
 import 'ball_container_widget.dart';
 
 class BallAnimatedWidget extends StatefulWidget {
@@ -31,7 +31,7 @@ class _BallAnimatedWidgetState extends State<BallAnimatedWidget>
         setState(() {});
       });
     _controller.forward();
-    _path = Paths.drawBallPath(widget.size);
+    _path = BallPath.drawPath(widget.size);
   }
 
   @override

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class BallContainerWidget extends StatelessWidget {
   const BallContainerWidget({Key? key}) : super(key: key);
-  static const size = 24.0;
+  static const size = 20.0;
 
   @override
   Widget build(BuildContext context) {

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Puzzle game',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF4C2C11)
+        scaffoldBackgroundColor: const Color(0xFF302A71)
       ),
       home: ChangeNotifierProvider(
         create: (context) => Engine(),
