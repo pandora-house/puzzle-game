@@ -33,7 +33,7 @@ class _BoxAnimatedWidgetState extends State<BoxAnimatedWidget> {
     final matrix = context.watch<Engine>().idMatrix;
     _gap = Engine().getGapPosition(widget.id, matrix);
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 400),
       top: _positionY + _boxHeight * _incrementY,
       left: _positionX + _boxWith * _incrementX,
       child: GestureDetector(
