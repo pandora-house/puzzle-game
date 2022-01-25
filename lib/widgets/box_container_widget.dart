@@ -68,11 +68,11 @@ class _BoxPainter extends CustomPainter {
     );
 
     Color innerMainColor = const Color(0xFF7D84BD);
-    Color innerSmallColor = const Color(0xFFC7CCFF);
+    Color innerSmallColor = const Color(0xFF949AFC);
 
     if (id == 1) {
-      innerSmallColor = const Color(0xFFE7A6FF);
-      innerMainColor = const Color(0xFFB300EA);
+      innerSmallColor = const Color(0xFFD868F5);
+      innerMainColor = const Color(0xFFC628B6);
     }
     if (id == 15) {
       innerSmallColor = const Color(0xFFFAFFF2);
