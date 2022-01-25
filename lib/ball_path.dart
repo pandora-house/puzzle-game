@@ -7,8 +7,8 @@ import 'puzzle_page.dart';
 import 'widgets/ball_container_widget.dart';
 import 'widgets/box_container_widget.dart';
 
-class Paths {
-  static Path drawBallPath(Size size) {
+class BallPath {
+  static Path drawPath(Size size) {
     const padding = PuzzlePage.padding;
     const internalGap = PuzzlePage.internalGap;
     final boxWith = Engine().getBoxWith(size);
@@ -21,13 +21,13 @@ class Paths {
         padding / 2 -
         ballSize / 2 +
         internalGap * quantityGaps +
-        boxBorderWidth / 2 + internalGap / quantityGaps;
+        boxBorderWidth / 2 - 1.5;
 
     final initY = boxHeight / 2 +
         padding / 2 -
         ballSize / 2 +
         internalGap * quantityGaps +
-        boxBorderWidth / 2 + internalGap / quantityGaps;
+        boxBorderWidth / 2 - 1.5;
 
     final path = Path()
       ..moveTo(initX, initY)
