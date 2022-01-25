@@ -10,9 +10,9 @@ enum MoveBox { top, bottom, left, right }
 class Engine extends ChangeNotifier {
   final _currentIdMatrix = [
     [1, 2, 3, 4],
-    [5, 6, 10, 7],
-    [8, 9, 14, 11],
-    [12, 13, 0, 15],
+    [5, 6, 9, 7],
+    [8, 0, 10, 11],
+    [12, 13, 14, 15],
   ];
 
   bool _correct = false;
