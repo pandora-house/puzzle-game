@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 
-import 'puzzle_page.dart';
 import 'models/models.dart';
+import 'puzzle_page.dart';
+import 'widgets/box_animated_widget.dart';
 
 enum PositionGap { top, bottom, left, right }
 enum MoveBox { top, bottom, left, right }
@@ -127,7 +128,7 @@ class Engine extends ChangeNotifier {
   double getBoxHeight(var size) =>
       (size.height - 2 * PuzzlePage.padding) / _currentIdMatrix.length;
 
-  void checkIdMatrix() {
+  void checkIdMatrix() async {
     final id1XY = <int>[0, 0];
     final id2XY = <int>[0, 1];
     final id8XY = <int>[0, 2];
@@ -147,10 +148,10 @@ class Engine extends ChangeNotifier {
     ];
 
     final correctMatrix = [
-      [1, 2, 3, 4],
-      [5, 6, 0, 7],
-      [8, 9, 10, 11],
-      [12, 13, 14, 15],
+      [1, 0, 0, 0],
+      [5, 0, 0, 0],
+      [8, 9, 0, 0],
+      [0, 13, 14, 15],
     ];
 
     for (final id in idList) {
@@ -159,7 +160,11 @@ class Engine extends ChangeNotifier {
       }
     }
 
+    await Future.delayed(
+        const Duration(milliseconds: BoxAnimatedWidget.timeAnimation));
+
     _correct = true;
+    notifyListeners();
   }
 
   int quantityInternalGaps() => _currentIdMatrix.length - 1;

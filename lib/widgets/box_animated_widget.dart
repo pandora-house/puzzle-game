@@ -10,6 +10,8 @@ class BoxAnimatedWidget extends StatefulWidget {
   final int id;
   final Size size;
 
+  static const timeAnimation = 400;
+
   @override
   State<BoxAnimatedWidget> createState() => _BoxAnimatedWidgetState();
 }
@@ -33,7 +35,7 @@ class _BoxAnimatedWidgetState extends State<BoxAnimatedWidget> {
     final matrix = context.watch<Engine>().idMatrix;
     _gap = Engine().getGapPosition(widget.id, matrix);
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: BoxAnimatedWidget.timeAnimation),
       top: _positionY + _boxHeight * _incrementY,
       left: _positionX + _boxWith * _incrementX,
       child: GestureDetector(
