@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../pipes_drawer.dart';
-import 'ball_container_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../engine.dart';
+import '../pipes_drawer.dart';
 import '../puzzle_page.dart';
+import 'ball_container_widget.dart';
 
 class BoxContainerWidget extends StatelessWidget {
   const BoxContainerWidget({Key? key, required this.id, required this.size})
