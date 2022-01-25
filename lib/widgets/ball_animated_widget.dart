@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../ball_path.dart';
+import '../engine.dart';
 import 'ball_container_widget.dart';
 
 class BallAnimatedWidget extends StatefulWidget {
@@ -23,15 +25,13 @@ class _BallAnimatedWidgetState extends State<BallAnimatedWidget>
   @override
   void initState() {
     super.initState();
+    _path = BallPath.drawPath(widget.size);
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 6));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller)
       ..addListener(() {
-        // todo change update ui
         setState(() {});
       });
-    _controller.forward();
-    _path = BallPath.drawPath(widget.size);
   }
 
   @override
@@ -42,6 +42,12 @@ class _BallAnimatedWidgetState extends State<BallAnimatedWidget>
 
   @override
   Widget build(BuildContext context) {
+    final correct = context.select<Engine, bool>((value) => value.correct);
+    if (correct) {
+      _controller.forward();
+    } else {
+      return Container();
+    }
     _path = BallPath.drawPath(widget.size);
     return Positioned(
         top: calculate(_animation.value).dy,
