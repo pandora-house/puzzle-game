@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'widgets/ball_animated_widget.dart';
 import 'widgets/box_animated_widget.dart';
@@ -11,10 +12,45 @@ class PuzzlePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    return Scaffold(
-        body: Padding(
-      padding: const EdgeInsets.all(padding),
+    Size size = MediaQuery.of(context).size;
+    if (!kIsWeb) {
+      if (size.width > size.height) {
+        final diff = size.width - size.height;
+        final width = size.height + diff / 4;
+        size = Size(width, size.height);
+        return Scaffold(
+          body: Center(
+              child: SizedBox(
+                  width: width,
+                  height: size.height,
+                  child: _PuzzleView(size: size))),
+        );
+      } else {
+        final diff = size.height - size.width;
+        final height = size.width + diff / 4;
+        size = Size(size.width, height);
+        return Scaffold(
+          body: Center(
+              child: SizedBox(
+                  width: size.width,
+                  height: height,
+                  child: _PuzzleView(size: size))),
+        );
+      }
+    } else {
+      return Scaffold(body: _PuzzleView(size: size));
+    }
+  }
+}
+
+class _PuzzleView extends StatelessWidget {
+  const _PuzzleView({Key? key, required this.size}) : super(key: key);
+  final Size size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(PuzzlePage.padding),
       child: Stack(
         children: [
           BoxAnimatedWidget(
@@ -82,6 +118,6 @@ class PuzzlePage extends StatelessWidget {
           ),
         ],
       ),
-    ));
+    );
   }
 }
